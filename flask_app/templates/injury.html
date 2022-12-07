@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <title>Document</title>
+</head>
+<body>
+    <h1>MyAthlete</h1>
+    <a href="/dashboard">Home</a>
+    <a href="/roster">My Athletes</a>
+    <a href="/logout">Logout</a>
+    <a href="/injury/edit/{{injury.id}}">edit injury</a>
+    <a href="/delete/{{injury.id}}" method="post">delete injury</a>
+    <table>
+        <tbody>
+            {% for injury in injuries %}
+                <tr>
+                {% if session['user_id'] == injury.user.id %}
+                    <td>{{injury.sport}}</td>
+                    <td>{{injury.date_injured.strftime("%B %d, %Y")}}</td>
+                    <td>{{injury.subjective}}</td>
+                    <td>{{injury.objective}}</td>
+                    <td>{{injury.assessment}}</td>
+                    <td>{{injury.plan}}</td>
+
+                {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+        <a class="navbar-brand" href="">MyAthlete</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/dashboard">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/roster">My Athletes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+    <h3 class="text-center">Welcome, {{user.first_name}}! </h3>
+    <a href="/injury/new">Add A New Injury</a>
+    <h3>Active Injuries</h3>
+    <table class="table table-striped text-center table-bordered d-flex p-2 justify-content-between">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date Injured</th>
+                <th>Sport</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for injury in injured_athletes %}
+            <tr>
+                {% if session['user_id'] == injury.user_id %}
+                <td>{{injury.athlete.first_name}} {{injury.athlete.last_name}}</td>
+                <td>{{injury.date_injured}}</td>
+                <td>{{injury.athlete.sport}}</td>
+                <td><a href="/injury/{{injury.id}}">view</a> | <a href="">edit</a></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
