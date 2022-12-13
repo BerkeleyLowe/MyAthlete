@@ -9,28 +9,49 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>MyAthlete</h1>
-    <a href="/dashboard">Home</a>
-    <a href="/roster">My Athletes</a>
-    <a href="/logout">Logout</a>
-    <a href="/injury/edit/{{injury.id}}">edit injury</a>
-    <a href="/delete/{{injury.id}}" method="post">delete injury</a>
-    <table>
-        <tbody>
-            {% for injury in injuries %}
-                <tr>
-                {% if session['user_id'] == injury.user.id %}
-                    <td>{{injury.sport}}</td>
-                    <td>{{injury.date_injured.strftime("%B %d, %Y")}}</td>
-                    <td>{{injury.subjective}}</td>
-                    <td>{{injury.objective}}</td>
-                    <td>{{injury.assessment}}</td>
-                    <td>{{injury.plan}}</td>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+        <a class="navbar-brand" href="">MyAthlete</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/dashboard">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/roster">My Athletes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+    
+    
+    
+    
+    <div class="m-3">
+    {% if session['user_id'] == injury.user.id %}
+    <h3><u>{{injury.athlete.first_name}} {{injury.athlete.last_name}}'s Injury</u></h3>
+        <p><strong>Sport:</strong> {{injury.sport}}</p>
+        <p><strong>Body Part:</strong> {{injury.body_part}}</p>
+        <p><strong>Date Injured:</strong> {{injury.date_injured.strftime("%B %d, %Y")}}</p>
+                        <p><u><strong>Subjective Information:</u></strong> <br>{{injury.subjective}}</p>
+                        <p><u><strong>Objective Information:</u></strong> <br>{{injury.objective}}</p>
+                        <p><u><strong>Assessment:</u></strong><br> {{injury.assessment}}</p>
+                        <p><u><strong>Plan:</u></strong><br> {{injury.plan}}</p>
+                        {% endif %}
+    </div>
+    <div class="m-3">
+        <a href="/injury/edit/{{injury.id}}">edit injury</a> |
+        <a href="/delete/{{injury.id}}" method="post">delete injury</a>
 
-                {% endif %}
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    </div>
+                    
+                    
 </body>
 </html>

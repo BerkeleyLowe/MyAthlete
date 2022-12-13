@@ -21,6 +21,6 @@ def create_athlete():
     if not athlete.Athlete.validate_athlete(request.form):
         return redirect('/athlete/new')
     athlete.Athlete.save(request.form)
-    return redirect('/dashboard')
+    return redirect('/roster')
 
 

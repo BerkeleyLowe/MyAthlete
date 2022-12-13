@@ -9,40 +9,66 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>MyAthlete</h1>
-    <a href="/dashboard">Home</a>
-    <a href="/roster">My Athletes</a>
-    <a href="/logout">Logout</a>
-    <form action="/injury/update" method="post" class="col-6 mx-auto">
-        <input type="hidden" name="user_id" value="{{session['user_id']}}">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+        <a class="navbar-brand" href="">MyAthlete</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/dashboard">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/roster">My Athletes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            </ul>
+        </div>
+        </div> 
+    </nav>
+    <form action="/injury/{{injury.id}}/update" method="post" class="col-6 mx-auto">
+        <input type="hidden" name="athlete_id" value="{{injury.athlete_id}}">
         <!-- ^this allows me to just pass through request.form instead of creating another dictionary;
         It's fulfilling the requirement of the user_id from the def save method in athlete.py-->
-        <h2 class="text-center">Edit {{athlete.first_name}} {{athlete.last_name}}'s Injury</h2>
+        <h2 class="text-center"><u>Edit {{injury.athlete.first_name}} {{injury.athlete.last_name}}'s Injury</u></h2>
         <div class="form-group">
             <label for="sport">Sport:</label>
-            <input type="text" name="sport" class="form-control">
+            <input type="text" name="sport" value="{{injury.athlete.sport}}" class="form-control">
         </div>
         <div class="form-group">
-            <label for="dob">Date Injured:</label>
-            <input type="date" name="date_injured">
+            <label for="date_injured">Date Injured:</label>
+            <input type="date" name="date_injured" value="{{injury.date_injured}}" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="body_part">Body Part:</label>
+            <input type="text" name="body_part" value="{{injury.body_part}}" class="form-control">
         </div>
         <div class="form-group">
             <label for="subjective">Subjective:</label>
-            <input type="text" name="subjective" class="form-control">
+            <textarea type="text" name="subjective" class="form-control">{{injury.subjective}}</textarea>
         </div>
         <div class="form-group">
             <label for="objective">Objective:</label>
-            <input type="text" name="objective" class="form-control">
+            <textarea type="text" name="objective" class="form-control">{{injury.objective}}</textarea> 
         </div>
         <div class="form-group">
             <label for="assessment">Assessment:</label>
-            <input type="text" name="assessment" class="form-control">
+            <input type="text" name="assessment" class="form-control" value="{{injury.assessment}}">
         </div>
         <div class="form-group">
             <label for="plan">Plan:</label>
-            <input type="text" name="plan" class="form-control">
+            <textarea type="text" name="plan" class="form-control" id="plan">{{injury.plan}}</textarea>
         </div>
-        <input type="submit" value="Injury" class="btn btn-success">
+
+        <!-- <div class="form-group">
+            <label for="plan">Plan:</label>
+            <input type="text"  name="plan" class="form-control" value="{{injury.plan}}">
+        </div> -->
+        <input type="submit" value="Update Injury" class="btn btn-success mt-3">
     </form>
 </body>
 </html>

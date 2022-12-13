@@ -14,6 +14,7 @@ class Athlete:
         self.updated_at = data['updated_at']
         self.user_id = data['user_id']
         self.injuries = []
+        self.injury = None
 
     # def __repr__(self) -> str:
     #     return f'Athlete instance ; {self.first_name},{self.user_id},{self.id},{self.injuries}'
@@ -28,7 +29,7 @@ class Athlete:
 #Read
     @classmethod 
     def get_athletes(cls):
-        query = "SELECT * FROM athletes LEFT JOIN users ON user_id = users.id;"
+        query = "SELECT * FROM athletes LEFT JOIN users ON user_id = users.id LEFT JOIN injuries on injuries.athlete_id = athletes.id;"
         results=connectToMySQL(cls.db).query_db(query)
         athletes = []
         for row in results:
@@ -43,6 +44,22 @@ class Athlete:
                 'updated_at':row['users.updated_at'],            
             }
             athlete.user = user.User(user_data)
+            if row['injuries.id'] != None:
+                injury_data = {
+                    "id" : row['injuries.id'],
+                    "sport" : row['sport'],
+                    "date_injured" : row['date_injured'],
+                    "body_part" : row['body_part'],
+                    "subjective" : row['subjective'],
+                    "objective" : row['objective'],
+                    "assessment" : row['assessment'],
+                    "plan" : row['plan'],
+                    "created_at" : row['injuries.created_at'],
+                    "updated_at" : row['injuries.updated_at'],
+                    "athlete_id" : row['athlete_id'],
+                    "user_id" : row['injuries.user_id']
+                }
+                athlete.injury = injury.Injury(injury_data)
             athletes.append(athlete)
         return athletes
 

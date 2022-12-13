@@ -17,7 +17,7 @@ class Injury:
         self.updated_at = data['updated_at']
         self.athlete_id = data['athlete_id']
         self.user_id = data['user_id']
-        self.athlete = None
+        self.athlete = None 
 
 #create
     @classmethod 
@@ -71,11 +71,58 @@ class Injury:
             print('get injured athletes from model',injuries)
         return injuries
 
+    @classmethod
+    def get_one_injury(cls,id):
+        data = {
+            'id':id
+        }
+        query = "SELECT * FROM injuries LEFT JOIN athletes ON athlete_id = athletes.id LEFT JOIN users ON injuries.user_id = users.id WHERE injuries.id = %(id)s;"
+        results=connectToMySQL(cls.db).query_db(query,data)
+        allData = []
+        for row in results:
+            injury=cls(results[0])
+            user_data = {
+                'id':row['users.id'],
+                'first_name':row['first_name'],
+                'last_name':row['last_name'],
+                'email':row['email'],
+                'password':row['password'],
+                'created_at':row['users.created_at'],
+                'updated_at':row['users.updated_at'],
+            
+            }
+        injury.user = user.User(user_data)
+
+        athlete_data = {
+                'id':row['athletes.id'],
+                'first_name':row['first_name'],
+                'last_name':row['last_name'],
+                'dob':row['dob'],
+                'sport':row['sport'],
+                'created_at':row['athletes.created_at'],
+                'updated_at':row['athletes.updated_at'],
+                'user_id': row['athletes.user_id'] 
+
+        }
+        injury.athlete = athlete.Athlete(athlete_data)
+        allData.append(injury)
+        return injury
+
 #Update
     @classmethod
     def update(cls,data):
-        query='''UPDATE injuries SET sport=%(sport)s, date_injured=%(date_injured)s, subjective=%(subjective)s, 
-        objective=%(objective)s, assessment=%(assessment)s, plan=%(plan)s WHERE id=%(id)s;'''
+        for key, value in data.items():
+            print(key,"\t\t",value)
+        query='''UPDATE injuries 
+        SET 
+        sport=%(sport)s, 
+        body_part=%(body_part)s,
+        date_injured=%(date_injured)s, 
+        subjective=%(subjective)s, 
+        objective=%(objective)s, 
+        assessment=%(assessment)s, 
+        plan=%(plan)s 
+        WHERE injuries.id=%(id)s;'''
         return connectToMySQL(cls.db).query_db(query,data)
 
 #Delete
@@ -84,7 +131,7 @@ class Injury:
         data = {
             'id':id
         }
-        query = "DELETE FROM injury WHERE id=%(id)s;"
+        query = "DELETE FROM injuries WHERE injuries.id=%(id)s;"
         return connectToMySQL(cls.db).query_db(query,data)
 
 #Validate
