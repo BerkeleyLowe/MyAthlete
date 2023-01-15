@@ -1,0 +1,49 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+.nav-item {
+    margin-right: 20px;
+    justify-content: space-between;
+}
+
+.bg-color{
+    background-color: rgb(243, 176, 51);
+}
+
+.logo-font{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 35px;
+}
+
+.menu-font {
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+}
+
+.header-font{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.flex-child{
+    flex: 1;
+}
+
+.flex-container{
+    display: flex;
+    margin: 20px;
+    justify-content: space-between;
+}
+
+.login-right{
+    border: 2px solid black;
+    border-radius: 5%;
+    padding: 30px;
+    background-color: rgb(239, 159, 79);
+}
+
+#signUpLogin{
+    margin-bottom: 20px;
+}
+
